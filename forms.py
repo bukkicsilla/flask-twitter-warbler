@@ -27,6 +27,7 @@ class UserForm(FlaskForm):
     header_image_url = StringField('Image URL')
     bio = StringField('Bio', )
     password = PasswordField('Password')
+    location = StringField('Location')
 
 class LoginForm(FlaskForm):
     """Login form."""

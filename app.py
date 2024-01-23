@@ -215,6 +215,31 @@ def profile():
     """Update profile for current user."""
 
     # IMPLEMENT THIS
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    user = g.user
+    form = UserForm(obj=user)
+
+    if form.validate_on_submit():
+        # User needs to enter password to authenticate
+
+        if User.authenticate(user.username, form.password.data):
+            user.username = form.username.data
+            user.email = form.email.data
+            user.image_url = form.image_url.data
+            user.header_image_url = form.header_image_url.data
+            user.bio = form.bio.data
+            user.location = form.location.data
+
+            db.session.commit()
+            flash("Profile updated", "success")
+            return redirect(f"/users/{user.id}")
+
+        flash("Wrong password, please try again", "danger")
+
+    return render_template("users/edit.html", form=form)
     
 
 @app.route('/users/delete', methods=["POST"])
