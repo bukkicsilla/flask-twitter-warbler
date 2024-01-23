@@ -1,5 +1,6 @@
 """SQLAlchemy models for Warbler."""
 
+#https://app.quickdatabasediagrams.com/#/d/28GzF9
 from datetime import datetime
 
 from flask_bcrypt import Bcrypt
