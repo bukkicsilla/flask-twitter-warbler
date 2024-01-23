@@ -320,10 +320,12 @@ def homepage():
     """
 
     if g.user:
+        following_ids = [following.id for following in g.user.following] + [g.user.id]
         messages = (Message
                     .query
+                    .filter(Message.user_id.in_(following_ids))
                     .order_by(Message.timestamp.desc())
-                    .limit(100)
+                    .limit(10)
                     .all())
 
         return render_template('home.html', messages=messages)
