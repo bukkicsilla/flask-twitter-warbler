@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import UserAddForm, LoginForm, MessageForm
+from forms import UserAddForm, LoginForm, MessageForm, UserForm
 from models import db, connect_db, User, Message
 
 CURR_USER_KEY = "curr_user"
@@ -74,6 +74,7 @@ def signup():
                 password=form.password.data,
                 email=form.email.data,
                 image_url=form.image_url.data or User.image_url.default.arg,
+                location=form.location.data
             )
             db.session.commit()
 
@@ -143,7 +144,7 @@ def users_show(user_id):
     """Show user profile."""
 
     user = User.query.get_or_404(user_id)
-
+    print(user)
     # snagging messages in order from the database;
     # user.messages won't be in order by default
     messages = (Message
@@ -214,7 +215,7 @@ def profile():
     """Update profile for current user."""
 
     # IMPLEMENT THIS
-
+    
 
 @app.route('/users/delete', methods=["POST"])
 def delete_user():

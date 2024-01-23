@@ -117,7 +117,7 @@ class User(db.Model):
     )
 
     def __repr__(self):
-        return f"<User #{self.id}: {self.username}, {self.email}>"
+        return f"<User #{self.id}: {self.username}, {self.email}, {self.location}>"
 
     def is_followed_by(self, other_user):
         """Is this user followed by `other_user`?"""
@@ -132,7 +132,7 @@ class User(db.Model):
         return len(found_user_list) == 1
 
     @classmethod
-    def signup(cls, username, email, password, image_url):
+    def signup(cls, username, email, password, image_url, location):
         """Sign up user.
 
         Hashes password and adds user to system.
@@ -145,6 +145,7 @@ class User(db.Model):
             email=email,
             password=hashed_pwd,
             image_url=image_url,
+            location=location
         )
 
         db.session.add(user)
